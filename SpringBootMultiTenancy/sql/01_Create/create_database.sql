@@ -31,8 +31,14 @@ CREATE TABLE sample.customer
 END IF;
 
 ---------------------------
+-- Enable RLS            --
+---------------------------
+ALTER TABLE sample.customer ENABLE ROW LEVEL SECURITY;
+
+---------------------------
 -- Create the RLS Policy --
 ---------------------------
+
 DROP POLICY IF EXISTS tenant_isolation_policy ON sample.customer;
 
 CREATE POLICY tenant_isolation_policy ON sample.customer
@@ -52,9 +58,8 @@ END IF;
 -- Grant Access to the Schema --
 --------------------------------
 GRANT USAGE ON SCHEMA sample TO app_user;
-GRANT ALL ON ALL TABLES IN SCHEMA sample TO app_user;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA sample TO app_user;
-
+GRANT ALL ON SEQUENCE sample.customer_customer_id_seq TO app_user;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sample.customer TO app_user;
 
 END;
 $$;

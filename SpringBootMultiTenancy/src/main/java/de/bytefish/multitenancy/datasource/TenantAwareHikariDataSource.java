@@ -1,3 +1,6 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.multitenancy.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -14,7 +17,9 @@ public class TenantAwareHikariDataSource extends HikariDataSource {
         Connection connection = super.getConnection();
 
         try (Statement sql = connection.createStatement()) {
-            sql.execute("SET app.current_tenant = '" + ThreadLocalStorage.getTenantName() + "'");
+            String tenantName = ThreadLocalStorage.getTenantName();
+
+            sql.execute("SET app.current_tenant = '" + tenantName + "'");
         }
 
         return connection;

@@ -2,9 +2,10 @@
 
 ## Project ##
 
-This project is an example project for Multi Tenancy with Spring Boot:
+This project is an example project for Multi Tenancy using Row Level Security:
 
-* https://bytefish.de/blog/spring_boot_multitenancy/
+* https://bytefish.de/blog/spring_boot_multitenancy_using_rls/
+
 
 
 ### Example ###
