@@ -33,9 +33,9 @@ END IF;
 ---------------------------
 -- Create the RLS Policy --
 ---------------------------
-DROP POLICY IF EXISTS sample.tenant_isolation_policy ON sample.customer
+DROP POLICY IF EXISTS tenant_isolation_policy ON sample.customer;
 
-CREATE POLICY sample.tenant_isolation_policy ON sample.customer
+CREATE POLICY tenant_isolation_policy ON sample.customer
     USING (tenant_name = current_setting('app.current_tenant')::VARCHAR);
 
 END;

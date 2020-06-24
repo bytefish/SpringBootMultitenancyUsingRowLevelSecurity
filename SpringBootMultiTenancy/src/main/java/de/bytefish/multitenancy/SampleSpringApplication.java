@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 @EnableAsync
-@EnableScheduling
 @EnableTransactionManagement
 public class SampleSpringApplication {
 
