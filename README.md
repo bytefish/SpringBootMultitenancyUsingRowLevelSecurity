@@ -6,8 +6,6 @@ This project is an example project for Multi Tenancy using Row Level Security:
 
 * https://bytefish.de/blog/spring_boot_multitenancy_using_rls/
 
-
-
 ### Example ###
 
 We start with inserting customers to the database of Tenant ``TenantOne``:
