@@ -31,8 +31,8 @@ public class SampleSpringApplication {
 		dataSource.setMaximumPoolSize(5);
 		dataSource.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
 		dataSource.addDataSourceProperty("url", "jdbc:postgresql://127.0.0.1:5432/sampledb");
-		dataSource.addDataSourceProperty("user", "philipp");
-		dataSource.addDataSourceProperty("password", "test_pwd");
+		dataSource.addDataSourceProperty("user", "app_user");
+		dataSource.addDataSourceProperty("password", "app_user");
 
 		return dataSource;
 	}

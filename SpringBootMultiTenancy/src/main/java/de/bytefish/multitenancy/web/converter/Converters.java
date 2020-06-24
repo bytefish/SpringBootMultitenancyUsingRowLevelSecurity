@@ -24,12 +24,12 @@ public class Converters {
         return new CustomerDto(source.getId(), source.getFirstName(), source.getLastName());
     }
 
-    public static Customer convert(CustomerDto source) {
+    public static Customer convert(CustomerDto source, String tenantName) {
         if(source == null) {
             return null;
         }
 
-        return new Customer(source.getId(), source.getFirstName(), source.getLastName());
+        return new Customer(source.getId(), source.getFirstName(), source.getLastName(), tenantName);
     }
 
     public static List<CustomerDto> convert(Iterable<Customer> customers) {

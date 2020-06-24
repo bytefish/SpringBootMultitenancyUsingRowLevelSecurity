@@ -3,6 +3,7 @@
 
 package de.bytefish.multitenancy.web.controllers;
 
+import de.bytefish.multitenancy.core.ThreadLocalStorage;
 import de.bytefish.multitenancy.model.Customer;
 import de.bytefish.multitenancy.repositories.ICustomerRepository;
 import de.bytefish.multitenancy.web.converter.Converters;
@@ -51,8 +52,11 @@ public class CustomerController {
 
     @PostMapping("/customers")
     public CustomerDto post(@RequestBody CustomerDto customer) {
+        // Get the current Tenant:
+        String tenantName = ThreadLocalStorage.getTenantName();
+
         // Convert to the Domain Object:
-        Customer source = Converters.convert(customer);
+        Customer source = Converters.convert(customer, tenantName);
 
         // Store the Entity:
         Customer result = repository.save(source);

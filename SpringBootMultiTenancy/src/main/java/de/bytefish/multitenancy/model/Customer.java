@@ -20,12 +20,17 @@ public class Customer {
     @Column(name = "last_name")
     private String lastName;
 
-    protected Customer() {}
+    @Column(name = "tenant_name")
+    private String tenantName;
 
-    public Customer(Long id, String firstName, String lastName) {
+    protected Customer() {
+    }
+
+    public Customer(Long id, String firstName, String lastName, String tenantName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.tenantName = tenantName;
     }
 
     public Long getId() {
@@ -39,5 +44,8 @@ public class Customer {
     public String getLastName() {
         return lastName;
     }
-}
 
+    public String getTenantName() {
+        return tenantName;
+    }
+}
