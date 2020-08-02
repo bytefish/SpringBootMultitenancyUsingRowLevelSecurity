@@ -112,12 +112,22 @@ END IF;
 -- Grant Access to the Schema --
 --------------------------------
 GRANT USAGE ON SCHEMA sample TO app_user;
+
+-------------------------------------
+-- Grant Access to sample.customer --
+-------------------------------------
 GRANT ALL ON SEQUENCE sample.customer_customer_id_seq TO app_user;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sample.customer TO app_user;
 
+-------------------------------------
+-- Grant Access to sample.address  --
+-------------------------------------
 GRANT ALL ON SEQUENCE sample.address_address_id_seq TO app_user;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sample.address TO app_user;
 
+---------------------------------------------
+-- Grant Access to sample.customer_address --
+---------------------------------------------
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sample.customer_address TO app_user;
 
 END;
