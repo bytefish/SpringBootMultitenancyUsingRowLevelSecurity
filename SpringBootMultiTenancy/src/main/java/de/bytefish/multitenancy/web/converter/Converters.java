@@ -5,7 +5,6 @@ package de.bytefish.multitenancy.web.converter;
 
 import de.bytefish.multitenancy.model.Address;
 import de.bytefish.multitenancy.model.Customer;
-import de.bytefish.multitenancy.model.CustomerAddress;
 import de.bytefish.multitenancy.web.model.AddressDto;
 import de.bytefish.multitenancy.web.model.CustomerDto;
 
