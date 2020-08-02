@@ -93,7 +93,7 @@ DROP POLICY IF EXISTS tenant_address_isolation_policy ON sample.address;
 CREATE POLICY tenant_address_isolation_policy ON sample.customer
     USING (tenant_name = current_setting('app.current_tenant')::VARCHAR);
 
-DROP POLICY IF EXISTS tenant_customer_address_isolation_policy ON sample.address;
+DROP POLICY IF EXISTS tenant_customer_address_isolation_policy ON sample.customer_address;
 
 CREATE POLICY tenant_customer_address_isolation_policy ON sample.customer_address
     USING (tenant_name = current_setting('app.current_tenant')::VARCHAR);
