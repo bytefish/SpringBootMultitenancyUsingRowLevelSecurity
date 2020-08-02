@@ -57,7 +57,6 @@ public class Converters {
         return customer;
     }
 
-
     public static List<Address> convert(List<AddressDto> source) {
 
         if(source == null) {
@@ -68,7 +67,6 @@ public class Converters {
                 .map(x -> convert(x))
                 .collect(Collectors.toList());
     }
-
 
     public static Address convert(AddressDto source) {
 

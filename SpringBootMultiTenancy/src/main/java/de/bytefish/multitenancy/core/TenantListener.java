@@ -16,6 +16,7 @@ public class TenantListener {
 
         if(tenant == null) {
             tenant = new Tenant();
+
             entity.setTenant(tenant);
         }
 
