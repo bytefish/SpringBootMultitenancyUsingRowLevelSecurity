@@ -6,6 +6,8 @@ package de.bytefish.multitenancy.web.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class CustomerDto {
 
     private final Long id;
@@ -14,11 +16,14 @@ public class CustomerDto {
 
     private final String lastName;
 
+    private final List<AddressDto> addresses;
+
     @JsonCreator
-    public CustomerDto(@JsonProperty("id") Long id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName) {
+    public CustomerDto(@JsonProperty("id") Long id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("addresses") List<AddressDto> addresses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.addresses = addresses;
     }
 
     @JsonProperty("id")
@@ -34,5 +39,10 @@ public class CustomerDto {
     @JsonProperty("lastName")
     public String getLastName() {
         return lastName;
+    }
+
+    @JsonProperty("addresses")
+    public List<AddressDto> getAddresses() {
+        return addresses;
     }
 }

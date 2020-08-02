@@ -3,7 +3,7 @@
 
 package de.bytefish.multitenancy.repositories;
 
-import de.bytefish.multitenancy.model.Customer;
+import de.bytefish.multitenancy.model.Address;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.scheduling.annotation.Async;
@@ -11,13 +11,10 @@ import org.springframework.scheduling.annotation.Async;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public interface ICustomerRepository extends CrudRepository<Customer, Long> {
+public interface IAddressRepository extends CrudRepository<Address, Long> {
 
     @Async
-    @Query("select c from Customer c")
-    CompletableFuture<List<Customer>> findAllAsync();
+    @Query("select a from Address a")
+    CompletableFuture<List<Address>> findAllAsync();
 
-    // Do a JOIN FETCH to prevent Hibernate from doing N+1 Queries...
-    @Query("select c from Customer c join fetch c.addresses a join fetch a.address")
-    List<Customer> findAll();
 }

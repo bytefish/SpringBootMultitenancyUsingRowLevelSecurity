@@ -11,13 +11,11 @@ This project is an example project for Multi Tenancy using Row Level Security:
 We start with inserting customers to the database of Tenant ``TenantOne``:
 
 ```
-> curl -H "X-TenantID: TenantOne" -H "Content-Type: application/json" -X POST -d "{\"firstName\" : \"Philipp\", \"lastName\" : \"Wagner\"}"  http://localhost:8080/customers
+> curl -H "X-TenantID: TenantOne" -H "Content-Type: application/json" -X POST -d "{\"firstName\" : \"Philipp\", \"lastName\" : \"Wagner\", \"addresses\": [ { \"name\": \"Philipp Wagner\", \"street\" : \"Hans-Andersen-Weg 90875\", \"postalcode\": \"54321\", \"city\": \"Düsseldorf\", \"country\": \"Germany\"} ] }" http://localhost:8080/customers
 
-{"id":13,"firstName":"Philipp","lastName":"Wagner"}
 
-> curl -H "X-TenantID: TenantOne" -H "Content-Type: application/json" -X POST -d "{\"firstName\" : \"Max\", \"lastName\" : \"Mustermann\"}"  http://localhost:8080/customers
+> curl -H "X-TenantID: TenantOne" -H "Content-Type: application/json" -X POST -d "{\"firstName\" : \"Max\", \"lastName\" : \"Mustermann\", \"addresses\": [ { \"name\": \"Max Mustermann\", \"street\" : \"Am Wald 8797\", \"postalcode\": \"12345\", \"city\": \"Berlin\", \"country\": \"Germany\"} ] }" http://localhost:8080/customers
 
-{"id":14,"firstName":"Max","lastName":"Mustermann"}
 ```
 
 Getting a list of all customers for ``TenantOne`` will now return two customers:
@@ -25,7 +23,6 @@ Getting a list of all customers for ``TenantOne`` will now return two customers:
 ```
 > curl -H "X-TenantID: TenantOne" -X GET http://localhost:8080/customers
 
-[{"id":13,"firstName":"Philipp","lastName":"Wagner"},{"id":14,"firstName":"Max","lastName":"Mustermann"}]
 ```
 
 While requesting a list of all customers for ``TenantTwo`` returns an empty list:

@@ -4,39 +4,47 @@
 package de.bytefish.multitenancy.web.controllers;
 
 import de.bytefish.multitenancy.core.ThreadLocalStorage;
+import de.bytefish.multitenancy.model.Address;
 import de.bytefish.multitenancy.model.Customer;
+import de.bytefish.multitenancy.model.CustomerAddress;
+import de.bytefish.multitenancy.repositories.IAddressRepository;
+import de.bytefish.multitenancy.repositories.ICustomerAddressRepository;
 import de.bytefish.multitenancy.repositories.ICustomerRepository;
 import de.bytefish.multitenancy.web.converter.Converters;
+import de.bytefish.multitenancy.web.model.AddressDto;
 import de.bytefish.multitenancy.web.model.CustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.util.resources.cldr.ext.CurrencyNames_is;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 public class CustomerController {
 
-    private final ICustomerRepository repository;
+    private final ICustomerRepository customerRepository;
+    private final IAddressRepository addressRepository;
+    private final ICustomerAddressRepository customerAddressRepository;
 
     @Autowired
-    public CustomerController(ICustomerRepository repository) {
-        this.repository = repository;
+    public CustomerController( IAddressRepository addressRepository, ICustomerRepository customerRepository, ICustomerAddressRepository customerAddressRepository) {
+        this.addressRepository = addressRepository;
+        this.customerRepository = customerRepository;
+        this.customerAddressRepository = customerAddressRepository;
     }
 
     @GetMapping("/customers")
     public List<CustomerDto> getAll() {
-        Iterable<Customer> customers = repository.findAll();
+        Iterable<Customer> customers = customerRepository.findAll();
 
         return Converters.convert(customers);
     }
 
     @GetMapping("/customers/{id}")
     public CustomerDto get(@PathVariable("id") long id) {
-        Customer customer = repository
+        Customer customer = customerRepository
                 .findById(id)
                 .orElse(null);
 
@@ -45,29 +53,45 @@ public class CustomerController {
 
     @GetMapping("/async/customers")
     public List<CustomerDto> getAllAsync() throws ExecutionException, InterruptedException {
-        return repository.findAllAsync()
+        return customerRepository.findAllAsync()
                 .thenApply(x -> Converters.convert(x))
                 .get();
     }
 
     @PostMapping("/customers")
-    public CustomerDto post(@RequestBody CustomerDto customer) {
-        // Get the current Tenant:
-        String tenantName = ThreadLocalStorage.getTenantName();
+    public CustomerDto post(@RequestBody CustomerDto customerDto) {
 
-        // Convert to the Domain Object:
-        Customer source = Converters.convert(customer, tenantName);
+        // Save the Customer:
+        Customer customer = Converters.convert(customerDto);
 
-        // Store the Entity:
-        Customer result = repository.save(source);
+        customerRepository.save(customer);
+
+        // Create and Assign Addresses:
+        if(customerDto.getAddresses() != null) {
+
+            // First insert the Address:
+            List<Address> addresses = Converters.convert(customerDto.getAddresses());
+
+            addresses.forEach(addressRepository::save);
+
+            // Then associate them:
+            List<CustomerAddress> customerAddresses = addresses.stream()
+                .map(address -> new CustomerAddress(customer, address))
+                .collect(Collectors.toList());
+
+            customerAddresses.forEach(customerAddressRepository::save);
+
+            // And set in the Customer:
+            customer.setAddresses(customerAddresses);
+        }
 
         // Return the DTO:
-        return Converters.convert(result);
+        return Converters.convert(customer);
     }
 
     @DeleteMapping("/customers/{id}")
     public void delete(@PathVariable("id") long id) {
-        repository.deleteById(id);
+        customerRepository.deleteById(id);
     }
 
 }
