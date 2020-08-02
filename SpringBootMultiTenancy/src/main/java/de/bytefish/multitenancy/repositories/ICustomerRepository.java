@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public interface ICustomerRepository extends CrudRepository<Customer, Long> {
 
     @Async
-    @Query("select c from Customer c")
+    @Query("select c from Customer c join fetch c.addresses a join fetch a.address")
     CompletableFuture<List<Customer>> findAllAsync();
 
     // Do a JOIN FETCH to prevent Hibernate from doing N+1 Queries...
