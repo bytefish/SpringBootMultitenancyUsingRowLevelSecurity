@@ -3,7 +3,6 @@
 
 package de.bytefish.multitenancy.web.controllers;
 
-import de.bytefish.multitenancy.core.ThreadLocalStorage;
 import de.bytefish.multitenancy.model.Address;
 import de.bytefish.multitenancy.model.Customer;
 import de.bytefish.multitenancy.model.CustomerAddress;
@@ -11,11 +10,9 @@ import de.bytefish.multitenancy.repositories.IAddressRepository;
 import de.bytefish.multitenancy.repositories.ICustomerAddressRepository;
 import de.bytefish.multitenancy.repositories.ICustomerRepository;
 import de.bytefish.multitenancy.web.converter.Converters;
-import de.bytefish.multitenancy.web.model.AddressDto;
 import de.bytefish.multitenancy.web.model.CustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.util.resources.cldr.ext.CurrencyNames_is;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
