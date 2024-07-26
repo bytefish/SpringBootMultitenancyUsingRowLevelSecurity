@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(schema = "sample", name = "customer")
+@Table(schema = "multitenant", name = "customer")
 @EntityListeners(TenantListener.class)
 public class Customer implements TenantAware {
 

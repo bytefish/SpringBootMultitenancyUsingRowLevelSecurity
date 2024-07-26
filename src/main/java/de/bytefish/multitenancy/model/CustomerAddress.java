@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "sample", name = "customer_address")
+@Table(schema = "multitenant", name = "customer_address")
 @EntityListeners(TenantListener.class)
 public class CustomerAddress implements TenantAware {
 

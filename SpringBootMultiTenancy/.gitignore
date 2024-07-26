@@ -1,9 +1,0 @@
-out/
-.idea/
-target
-elasticutils-*-javadoc.jar
-elasticutils-*-sources.jar
-*.asc
-stderr.log
-stdout.log
-FlinkExperiment.iml

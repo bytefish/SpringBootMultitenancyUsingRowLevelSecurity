@@ -1,0 +1,24 @@
+networks:
+  services:
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    networks:
+      - services
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=sampledb
+    volumes:
+      - ./sql/create_database.sql:/docker-entrypoint-initdb.d/1-create_database.sql
+      - ./sql/create_data.sql:/docker-entrypoint-initdb.d/2-create_data.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    profiles:  ["postgres", "dev"]

@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(schema = "sample", name = "address")
+@Table(schema = "multitenant", name = "address")
 @EntityListeners(TenantListener.class)
 public class Address implements TenantAware {
 
