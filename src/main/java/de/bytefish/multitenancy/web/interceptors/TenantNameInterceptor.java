@@ -3,12 +3,13 @@
 package de.bytefish.multitenancy.web.interceptors;
 
 import de.bytefish.multitenancy.core.ThreadLocalStorage;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.ModelAndView;
 
-public class TenantNameInterceptor extends HandlerInterceptorAdapter {
+public class TenantNameInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -34,4 +35,5 @@ public class TenantNameInterceptor extends HandlerInterceptorAdapter {
         // information:
         ThreadLocalStorage.setTenantName(null);
     }
+
 }

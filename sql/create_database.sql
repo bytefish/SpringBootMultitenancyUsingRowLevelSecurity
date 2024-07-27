@@ -2,6 +2,25 @@ DO $$
 BEGIN
 
 ---------------------------
+-- Create the tenants   --
+---------------------------
+IF NOT EXISTS (
+  SELECT FROM pg_catalog.pg_roles
+  WHERE  rolname = 'tenant_a') THEN
+
+    CREATE ROLE tenant_a LOGIN PASSWORD 'tenant_a';
+
+END IF;
+
+IF NOT EXISTS (
+  SELECT FROM pg_catalog.pg_roles
+  WHERE  rolname = 'tenant_b') THEN
+
+    CREATE ROLE tenant_b LOGIN PASSWORD 'tenant_b';
+
+END IF;
+
+---------------------------
 -- Create the Schema     --
 ---------------------------
 CREATE SCHEMA IF NOT EXISTS multitenant;
@@ -43,7 +62,14 @@ CREATE TABLE IF NOT EXISTS multitenant.customer_address
 ---------------------------
 -- Enable RLS            --
 ---------------------------
-ALTER TABLE multitenant.customer ENABLE ROW LEVEL SECURITY;
+ALTER TABLE multitenant.customer 
+    ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE multitenant.address 
+    ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE multitenant.customer_address 
+    ENABLE ROW LEVEL SECURITY;
 
 ---------------------------
 -- Create the RLS Policy --
@@ -60,25 +86,6 @@ CREATE POLICY tenant_address_isolation_policy ON multitenant.address
 
 CREATE POLICY tenant_customer_address_isolation_policy ON multitenant.customer_address
     USING (tenant_name = current_user);
-
----------------------------
--- Create the tenants   --
----------------------------
-IF NOT EXISTS (
-  SELECT FROM pg_catalog.pg_roles
-  WHERE  rolname = 'tenant_a') THEN
-
-    CREATE ROLE tenant_a LOGIN PASSWORD 'tenant_a';
-
-END IF;
-
-IF NOT EXISTS (
-  SELECT FROM pg_catalog.pg_roles
-  WHERE  rolname = 'tenant_b') THEN
-
-    CREATE ROLE tenant_b LOGIN PASSWORD 'tenant_b';
-
-END IF;
 
 --------------------------------
 -- Grant Access to the Schema --

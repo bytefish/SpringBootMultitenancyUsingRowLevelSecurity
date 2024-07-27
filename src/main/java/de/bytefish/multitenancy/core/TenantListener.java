@@ -4,9 +4,9 @@ package de.bytefish.multitenancy.core;
 
 import de.bytefish.multitenancy.model.Tenant;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
+import jakarta.persistence.PreUpdate;
 
 public class TenantListener {
 

@@ -1,7 +1,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package de.bytefish.multitenancy.async;
-
 import de.bytefish.multitenancy.core.ThreadLocalStorage;
 import org.springframework.core.task.TaskDecorator;
 

@@ -5,7 +5,7 @@ package de.bytefish.multitenancy.model;
 import de.bytefish.multitenancy.core.TenantAware;
 import de.bytefish.multitenancy.core.TenantListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
