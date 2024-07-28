@@ -36,19 +36,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.initialize": false,
-        "spring.datasource.url"  : "jdbc:postgresql://localhost:5432/sampledb",
-        "spring.datasource.username" : "postgres",
-        "spring.datasource.password" : "password",
-        "spring.jpa.hibernate.ddl-auto" : "update",
-        "spring.jpa.open-in-view": false,
-        "spring.jpa.hibernate.naming.physical-strategy": "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
-        "spring.jpa.show-sql": true,
-        "spring.jpa.hibernate.ddl-auto": "none"
-      }'
+      - SPRING_PROFILES_ACTIVE=docker
     volumes:
-      - .m2:/root/.m2
+      - /docker/.m2:/root/.m2
     stdin_open: true
     tty: true

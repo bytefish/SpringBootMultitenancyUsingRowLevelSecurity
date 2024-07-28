@@ -37,8 +37,9 @@ public class SampleSpringApplication {
 		Map<Object,Object> targetDataSources = new HashMap<>();
 
 		for(var tenantConfiguration : applicationConfiguration.getTenants()) {
+			// Builds the DataSource for the Tenant
 			var tenantDataSource = buildDataSource(tenantConfiguration);
-
+			// Puts it into the DataSources available for routing a Request
 			targetDataSources.put(tenantConfiguration.getName(), tenantDataSource);
 		}
 
@@ -58,20 +59,6 @@ public class SampleSpringApplication {
 		dataSource.addDataSourceProperty("url", tenantConfiguration.getDbUrl());
 		dataSource.addDataSourceProperty("user", tenantConfiguration.getDbUser());
 		dataSource.addDataSourceProperty("password", tenantConfiguration.getDbPassword());
-
-		return dataSource;
-	}
-
-	public DataSource tenantB() {
-
-		HikariDataSource dataSource = new HikariDataSource();
-
-		dataSource.setInitializationFailTimeout(0);
-		dataSource.setMaximumPoolSize(5);
-		dataSource.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
-		dataSource.addDataSourceProperty("url", "jdbc:postgresql://localhost:5432/sampledb");
-		dataSource.addDataSourceProperty("user", "tenant_b");
-		dataSource.addDataSourceProperty("password", "tenant_b");
 
 		return dataSource;
 	}

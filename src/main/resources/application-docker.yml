@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: test
+      on-profile: docker
   jpa:
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
@@ -21,10 +21,10 @@ application:
   test: "abc"
   tenants:
     - name: "tenant_a"
-      dbUrl: "jdbc:postgresql://localhost:5432/sampledb"
+      dbUrl: "jdbc:postgresql://postgres:5432/sampledb"
       dbUser: "tenant_a"
       dbPassword: "tenant_a"
     - name: "tenant_b"
-      dbUrl: "jdbc:postgresql://localhost:5432/sampledb"
+      dbUrl: "jdbc:postgresql://postgres:5432/sampledb"
       dbUser: "tenant_b"
       dbPassword: "tenant_b"
