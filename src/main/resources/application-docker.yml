@@ -18,7 +18,6 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 application:
-  test: "abc"
   tenants:
     - name: "tenant_a"
       dbUrl: "jdbc:postgresql://postgres:5432/sampledb"

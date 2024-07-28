@@ -25,27 +25,50 @@ END IF;
 ---------------------------
 CREATE SCHEMA IF NOT EXISTS multitenant;
 
+
+----------------------------
+-- Create Sequences       --
+----------------------------
+CREATE SEQUENCE IF NOT EXISTS multitenant.customer_seq
+    start 38187
+    increment 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE SEQUENCE IF NOT EXISTS multitenant.address_seq
+    start 38187
+    increment 1
+    NO MAXVALUE
+    CACHE 1;
+
 ----------------------------
 -- Create the Tables      --
 ----------------------------
 CREATE TABLE IF NOT EXISTS multitenant.customer
 (
-	customer_id SERIAL PRIMARY KEY,
+	customer_id integer default nextval('multitenant.customer_seq'),
 	first_name VARCHAR(255) NOT NULL,
 	last_name VARCHAR(255) NOT NULL,
-	tenant_name VARCHAR(255) NOT NULL
+	tenant_name VARCHAR(255) NOT NULL,
+    CONSTRAINT customer_pkey
+        PRIMARY KEY (customer_id)
+
 );
 
 CREATE TABLE IF NOT EXISTS multitenant.address
 (
-	address_id SERIAL PRIMARY KEY,
+	address_id integer default nextval('multitenant.address_seq'),
 	name VARCHAR(255) NOT NULL,
 	street VARCHAR(255) NULL,
 	postalcode VARCHAR(255) NULL,
 	city VARCHAR(255) NULL,
 	country VARCHAR(255) NULL,
-	tenant_name VARCHAR(255) NOT NULL
+	tenant_name VARCHAR(255) NOT NULL,
+    CONSTRAINT address_pkey
+        PRIMARY KEY (address_id)
+
 );
+
 CREATE TABLE IF NOT EXISTS multitenant.customer_address
 (
 	customer_id integer NOT NULL,
@@ -96,10 +119,10 @@ GRANT USAGE ON SCHEMA multitenant TO tenant_b;
 -------------------------------------------------------
 -- Grant Access to multitenant.customer for Tenant A --
 -------------------------------------------------------
-GRANT ALL ON SEQUENCE multitenant.customer_customer_id_seq TO tenant_a;
+GRANT ALL ON SEQUENCE multitenant.customer_seq TO tenant_a;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.customer TO tenant_a;
 
-GRANT ALL ON SEQUENCE multitenant.address_address_id_seq TO tenant_a;
+GRANT ALL ON SEQUENCE multitenant.address_seq TO tenant_a;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.address TO tenant_a;
 
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.customer_address TO tenant_a;
@@ -107,10 +130,10 @@ GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.customer_address TO te
 -------------------------------------------------------
 -- Grant Access to multitenant.customer for Tenant B --
 -------------------------------------------------------
-GRANT ALL ON SEQUENCE multitenant.customer_customer_id_seq TO tenant_b;
+GRANT ALL ON SEQUENCE multitenant.customer_seq TO tenant_b;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.customer TO tenant_b;
 
-GRANT ALL ON SEQUENCE multitenant.address_address_id_seq TO tenant_b;
+GRANT ALL ON SEQUENCE multitenant.address_seq TO tenant_b;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.address TO tenant_b;
 
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE multitenant.customer_address TO tenant_b;
