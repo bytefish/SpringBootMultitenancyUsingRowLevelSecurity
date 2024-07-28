@@ -28,6 +28,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/rls-api/Dockerfile
+    networks:
+      - services
     restart: on-failure
     env_file: ./docker/.env
     profiles:  ["api", "dev"]
@@ -36,7 +38,7 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.initialize": false,
-        "spring.datasource.url"  : "jdbc:postgresql://postgres:5432/sampledb",
+        "spring.datasource.url"  : "jdbc:postgresql://localhost:5432/sampledb",
         "spring.datasource.username" : "postgres",
         "spring.datasource.password" : "password",
         "spring.jpa.hibernate.ddl-auto" : "update",

@@ -1,0 +1,27 @@
+spring:
+  jpa:
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    datasource:
+      initialize: false
+    hibernate:
+      ddl-auto: none
+      dialect:
+        format_sql: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+application:
+  test: "abc"
+  tenants:
+    - name: "tenant_a"
+      dbUrl: "jdbc:postgresql://localhost:5432/sampledb"
+      dbUser: "tenant_a"
+      dbPassword: "tenant_a"
+    - name: "tenant_b"
+      dbUrl: "jdbc:postgresql://localhost:5432/sampledb"
+      dbUser: "tenant_b"
+      dbPassword: "tenant_b"
