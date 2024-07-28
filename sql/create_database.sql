@@ -25,7 +25,6 @@ END IF;
 ---------------------------
 CREATE SCHEMA IF NOT EXISTS multitenant;
 
-
 ----------------------------
 -- Create Sequences       --
 ----------------------------
